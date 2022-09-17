@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\PositionsCollection;
-use App\Interfaces\PositionsRepositoryInterface;
+use App\Contracts\PositionsRepositoryInterface;
 use F9Web\ApiResponseHelpers;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;

@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-use App\Interfaces\PositionsRepositoryInterface;
+use App\Contracts\PositionsRepositoryInterface;
 use App\Models\Position;
 use Illuminate\Database\Eloquent\Collection;
 
