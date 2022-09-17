@@ -22,14 +22,11 @@ class UsersSeeder extends Seeder
         $usersCount = 45;
 
         while ($usersCount > 0) {
-
             User::factory()->create([
                 'position_id' => $positionsIds->random(),
             ]);
 
             $usersCount--;
         }
-
-
     }
 }

@@ -29,7 +29,5 @@ Route::name('api.')->group(function () {
         Route::get('{user}', [UsersController::class, 'show'])->name('show');
 
         Route::post('', [UsersController::class, 'store'])->name('store');
-
     });
 });
-
