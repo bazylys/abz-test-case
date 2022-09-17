@@ -6,7 +6,6 @@ use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class PositionsCollection extends ResourceCollection
 {
-
     public static $wrap = 'positions';
 
     /**

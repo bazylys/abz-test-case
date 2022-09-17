@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
-if( ! function_exists('unique_random') ){
+if (! function_exists('unique_random')) {
     /**
      *
      * Generate a unique random string of characters
@@ -23,19 +23,17 @@ if( ! function_exists('unique_random') ){
         // Store tested results in array to not test them again
         $tested = [];
 
-        do{
+        do {
             $random = Str::random($chars);
 
-            if( in_array($random, $tested) ){
+            if (in_array($random, $tested)) {
                 continue;
             }
 
             $notUnique = DB::table($table)->where($col, '=', $random)->exists();
 
             $tested[] = $random;
-
-        }
-        while($notUnique);
+        } while ($notUnique);
 
         return $random;
     }

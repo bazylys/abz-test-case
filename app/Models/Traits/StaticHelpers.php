@@ -6,6 +6,6 @@ trait StaticHelpers
 {
     public static function getTableName()
     {
-        return with(new static)->getTable();
+        return with(new static())->getTable();
     }
 }
