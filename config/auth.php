@@ -107,5 +107,5 @@ return [
     */
 
     'password_timeout' => 10800,
-
+    'token_lifetime' => 2400,   // 40 min token life time
 ];

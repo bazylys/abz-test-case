@@ -1,6 +1,7 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Api\GetAccessTokenController;
+use App\Http\Controllers\Api\GetPositionsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,7 +14,11 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::name('api.')->group(function () {
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+    Route::get('token', GetAccessTokenController::class)->name('get-token');
+
+    Route::get('positions', GetPositionsController::class)->name('get-positions');
+
 });
+
