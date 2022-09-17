@@ -26,7 +26,7 @@ Route::name('api.')->group(function () {
 
         Route::get('', [UsersController::class, 'index'])->name('index');
 
-        Route::get('{user}', [UsersController::class, 'show'])->name('show');
+        Route::get('{user_id}', [UsersController::class, 'show'])->name('show');
 
         Route::post('', [UsersController::class, 'store'])->name('store');
     });

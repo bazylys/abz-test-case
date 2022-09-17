@@ -23,16 +23,23 @@ class GetPositionsController extends Controller
     {
         $positions = $repository->getAllPositions();
 
-        if (count($positions) > 0) {
-            // success
-            return PositionsCollection::make($repository->getAllPositions())
-                ->additional($this->_api_helpers_defaultSuccessData);
+        if (count($positions) <= 0) {
+            // errors
+            return $this->apiResponse([
+                'success' => false,
+                'message' => 'Positions not found',
+            ], Response::HTTP_UNPROCESSABLE_ENTITY);
+
+
         }
 
-        // errors
-        return $this->apiResponse([
-            'success' => false,
-            'message' => 'Positions not found',
-        ], Response::HTTP_UNPROCESSABLE_ENTITY);
+        // success
+        return apiFormatResponse(
+            code: Response::HTTP_OK,
+            data: PositionsCollection::make($repository->getAllPositions())->toArray($request),
+            status: true
+        );
+
+
     }
 }
