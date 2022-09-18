@@ -30,16 +30,15 @@ class GetPositionsController extends Controller
                 'message' => 'Positions not found',
             ], Response::HTTP_UNPROCESSABLE_ENTITY);
 
-
         }
+        $data = new PositionsCollection($positions);
 
         // success
         return apiFormatResponse(
             code: Response::HTTP_OK,
-            data: PositionsCollection::make($repository->getAllPositions())->toArray($request),
+            data: $data,
             status: true
         );
-
 
     }
 }

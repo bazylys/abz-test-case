@@ -1,12 +1,19 @@
 <?php
 
-if (! function_exists('apiFormatResponse')) {
+use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Http\Resources\Json\ResourceCollection;
 
-    function apiFormatResponse($code = 200, $data = [], $status = null )
+if (!function_exists('apiFormatResponse')) {
+
+    function apiFormatResponse($code = 200, $data = [], $status = null)
     {
+        if ($data instanceof JsonResource) {
+            $data = $data->response(request())->getData(true);
+        }
+
         if (isset($status)) {
             $data = array_merge([
-                'success' => $status ? 'success' : 'false',
+                'success' => $status,
             ], $data);
         }
 
