@@ -4,7 +4,9 @@ namespace App\Contracts;
 
 interface UsersRepositoryInterface
 {
-    public function getAllUsers();
+    public function index();
 
-    public function getUser($userId);
+    public function show($userId);
+
+    public function create($data);
 }

@@ -28,6 +28,9 @@ Route::name('api.')->group(function () {
 
         Route::get('{user_id}', [UsersController::class, 'show'])->name('show');
 
-        Route::post('', [UsersController::class, 'store'])->name('store');
+        Route::middleware('token.auth')->group(function () {
+            Route::post('', [UsersController::class, 'store'])->name('store');
+        });
+
     });
 });

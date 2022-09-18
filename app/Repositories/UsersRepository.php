@@ -17,7 +17,7 @@ class UsersRepository implements UsersRepositoryInterface
         $this->request = $request;
     }
 
-    public function getAllUsers()
+    public function index()
     {
         $perPage = $this->request->count ?? 5;
 
@@ -33,10 +33,21 @@ class UsersRepository implements UsersRepositoryInterface
             ->paginate(perPage: $perPage, page: $page);
     }
 
-    public function getUser($userId)
+    public function show($userId)
     {
         return User::query()->findOr($userId, function () {
             throw new UserNotFoundException();
         });
+    }
+
+    public function create($data): bool
+    {
+        return User::query()->insertGetId([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'phone' => $data['phone'],
+            'position_id' => $data['position_id'],
+            'photo' => $data['photo'],
+        ]);
     }
 }

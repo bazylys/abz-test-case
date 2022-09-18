@@ -12,4 +12,10 @@ class AccessToken extends Model
     use StaticHelpers;
 
     protected $guarded = [];
+
+    protected $primaryKey = 'token';
+
+    public $incrementing = false;
+
+    protected $keyType = 'string';
 }

@@ -23,10 +23,9 @@ class GetAccessTokenController extends Controller
     {
         $token = $service->createToken();
 
-        $response = array_merge($this->_api_helpers_defaultSuccessData, [
-            'token' => $token->token,
-        ]);
-
-        return $this->respondWithSuccess($response);
+        return apiFormatResponse(
+            data: ['token' => $token->token],
+            status: true
+        );
     }
 }
