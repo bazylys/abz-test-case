@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Events\PhotoUploadedEvent;
+use App\Exceptions\UserWithThisDataAlreadyExistsException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\IndexUserRequest;
 use App\Http\Requests\ShowUserRequest;
@@ -9,11 +11,15 @@ use App\Http\Requests\StoreUserRequest;
 use App\Http\Resources\UsersCollection;
 use App\Http\Resources\UsersResource;
 use App\Contracts\UsersRepositoryInterface;
+use App\Models\User;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Response;
 
 class UsersController extends Controller
 {
-    public $usersRepository;
+    public UsersRepositoryInterface $usersRepository;
 
     public function __construct(UsersRepositoryInterface $usersRepository)
     {
@@ -54,13 +60,20 @@ class UsersController extends Controller
     {
         $this->checkStoreUserData($request->all());
 
-        $userId = $this->usersRepository->create($request->only([
+        $data = $request->only([
             'name',
             'email',
             'phone',
             'position_id',
-            'photo',
-        ]));
+        ]);
+
+        if ($request->hasFile('photo')) {
+            $photoName = $this->uploadUserPhoto($request->file('photo'));
+
+            $data['photo'] = $photoName;
+        }
+
+        $userId = $this->usersRepository->create($data);
 
         return apiFormatResponse(
             data: [
@@ -74,6 +87,21 @@ class UsersController extends Controller
 
     protected function checkStoreUserData($data)
     {
+        if (User::query()->where('email', $data['email'])
+            ->orWhere('phone', $data['phone'])
+            ->exists()) {
+            throw new UserWithThisDataAlreadyExistsException();
+        }
+    }
 
+    protected function uploadUserPhoto(UploadedFile $file)
+    {
+        $resultPath = Storage::disk('photos')->put('/', $file);
+
+        $fullPath = Storage::disk('photos')->path($resultPath);
+
+        event(new PhotoUploadedEvent($fullPath));
+
+        return $resultPath;
     }
 }

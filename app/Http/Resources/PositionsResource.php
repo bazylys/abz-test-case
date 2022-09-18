@@ -3,12 +3,9 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Facades\Storage;
 
-class UsersResource extends JsonResource
+class PositionsResource extends JsonResource
 {
-    public static $wrap = 'user';
-
     /**
      * Transform the resource into an array.
      *
@@ -20,11 +17,6 @@ class UsersResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'email' => $this->email,
-            'phone' => $this->phone,
-            'position' => $this->position->name,
-            'position_id' => $this->position->id,
-            'photo' => Storage::disk('photos')->url($this->photo),
         ];
     }
 }

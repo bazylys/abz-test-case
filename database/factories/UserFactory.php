@@ -22,7 +22,7 @@ class UserFactory extends Factory
             'email' => fake()->unique()->safeEmail(),
             'phone' => fake()->e164PhoneNumber(),
             // position_id will be filled in seeder because of another data needed
-            'photo' => 'test',
+            'photo' => 'default.jpg',
         ];
     }
 
