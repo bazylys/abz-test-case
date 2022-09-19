@@ -31,6 +31,5 @@ Route::name('api.')->group(function () {
         Route::middleware('token.auth')->group(function () {
             Route::post('', [UsersController::class, 'store'])->name('store');
         });
-
     });
 });

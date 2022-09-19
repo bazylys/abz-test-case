@@ -28,12 +28,17 @@ class UsersController extends Controller
 
     public function index(IndexUserRequest $request)
     {
-        $data = new UsersCollection($this->usersRepository->index());
 
-        $dataArray = $data->response($request)->getData(true);
+        $filterData = $request->only(['count', 'page', 'offset']);
+
+        $usersData = $this->usersRepository->index($filterData);
+
+        $data = new UsersCollection($usersData);
+
 
         // sending users to end of response ;)
         // TODO: fix this part
+        $dataArray = $data->response($request)->getData(true);
         $users = $dataArray['users'];
         unset($dataArray['users']);
         $dataArray['users'] = $users;
@@ -47,7 +52,8 @@ class UsersController extends Controller
 
     public function show(ShowUserRequest $request, $user_id)
     {
-        $data = UsersResource::make($this->usersRepository->show($user_id));
+        $userData = $this->usersRepository->show($user_id);
+        $data = UsersResource::make($userData);
 
         return apiFormatResponse(
             code: Response::HTTP_OK,
@@ -82,14 +88,15 @@ class UsersController extends Controller
             ],
             status: true,
         );
-
     }
 
     protected function checkStoreUserData($data)
     {
-        if (User::query()->where('email', $data['email'])
+        if (
+            User::query()->where('email', $data['email'])
             ->orWhere('phone', $data['phone'])
-            ->exists()) {
+            ->exists()
+        ) {
             throw new UserWithThisDataAlreadyExistsException();
         }
     }

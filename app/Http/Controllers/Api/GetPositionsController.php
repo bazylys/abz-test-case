@@ -29,7 +29,6 @@ class GetPositionsController extends Controller
                 'success' => false,
                 'message' => 'Positions not found',
             ], Response::HTTP_UNPROCESSABLE_ENTITY);
-
         }
         $data = new PositionsCollection($positions);
 
@@ -39,6 +38,5 @@ class GetPositionsController extends Controller
             data: $data,
             status: true
         );
-
     }
 }

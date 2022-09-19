@@ -17,14 +17,14 @@ class UsersRepository implements UsersRepositoryInterface
         $this->request = $request;
     }
 
-    public function index()
+    public function index(array $params = [])
     {
-        $perPage = $this->request->count ?? 5;
+        $perPage = $params['count'] ?? 5;
 
-        $page = $this->request->page ?? 1;
+        $page = $params['page'] ?? 1;
 
-        if ($this->request->filled('offset')) {
-            $page = $this->request->offset / $perPage;
+        if (isset($params['offset'])) {
+            $page = $params['offset'] / $perPage;
         }
 
         return User::query()

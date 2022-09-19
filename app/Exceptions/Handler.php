@@ -5,7 +5,6 @@ namespace App\Exceptions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Validation\ValidationException;
-
 use Psr\Log\LogLevel;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
