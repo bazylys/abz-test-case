@@ -29,7 +29,7 @@ class TokenAuth
 
         $this->tokenService->check($token);
 
-        $response =  $next($request);
+        $response = $next($request);
 
         $this->tokenService->revokeToken($token);
 

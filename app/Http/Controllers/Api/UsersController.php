@@ -15,7 +15,6 @@ use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Response;
 
 class UsersController extends Controller
@@ -29,7 +28,6 @@ class UsersController extends Controller
 
     public function index(IndexUserRequest $request): JsonResponse
     {
-
         $filterData = $request->only(['count', 'page', 'offset']);
 
         $usersData = $this->usersRepository->index($filterData);
@@ -54,6 +52,7 @@ class UsersController extends Controller
     public function show(ShowUserRequest $request, $user_id): JsonResponse
     {
         $userData = $this->usersRepository->show($user_id);
+
         $data = UsersResource::make($userData);
 
         return apiFormatResponse(

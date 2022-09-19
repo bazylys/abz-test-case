@@ -186,7 +186,7 @@
                 formData.append('phone', data.phone);
                 formData.append('photo', fileField.files[0]);
                 fetch(
-                    'http://localhost/api/users',
+                    '{{ route('api.users.index') }}',
                     {
                         method: 'POST', body: formData, headers: {
                             'token': token,

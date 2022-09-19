@@ -2,7 +2,7 @@
 
 ```bash
 
-# Clone repo
+# Clone re  po
 git clone https://github.com/bazylys/abz-test-case
 
 # Go to folder
@@ -29,7 +29,7 @@ vendor/bin/sail npm install
 # Build Front
 vendor/bin/sail npm run dev
 ## [Swap to new term] ##
-
+  
 # Migrate db & generate key
 vendor/bin/sail artisan migrate --seed
 vendor/bin/sail artisan key:generate
