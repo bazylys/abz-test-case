@@ -12,6 +12,7 @@ use App\Http\Resources\UsersCollection;
 use App\Http\Resources\UsersResource;
 use App\Contracts\UsersRepositoryInterface;
 use App\Models\User;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -26,7 +27,7 @@ class UsersController extends Controller
         $this->usersRepository = $usersRepository;
     }
 
-    public function index(IndexUserRequest $request)
+    public function index(IndexUserRequest $request): JsonResponse
     {
 
         $filterData = $request->only(['count', 'page', 'offset']);
@@ -50,7 +51,7 @@ class UsersController extends Controller
         );
     }
 
-    public function show(ShowUserRequest $request, $user_id)
+    public function show(ShowUserRequest $request, $user_id): JsonResponse
     {
         $userData = $this->usersRepository->show($user_id);
         $data = UsersResource::make($userData);
@@ -62,7 +63,7 @@ class UsersController extends Controller
         );
     }
 
-    public function store(StoreUserRequest $request)
+    public function store(StoreUserRequest $request): JsonResponse
     {
         $this->checkStoreUserData($request->all());
 

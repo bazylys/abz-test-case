@@ -1,11 +1,11 @@
 <?php
 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Http\Resources\Json\ResourceCollection;
 
 if (!function_exists('apiFormatResponse')) {
 
-    function apiFormatResponse($code = 200, $data = [], $status = null)
+    function apiFormatResponse($code = 200, $data = [], $status = null): JsonResponse
     {
         if ($data instanceof JsonResource) {
             $data = $data->response(request())->getData(true);

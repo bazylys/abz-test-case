@@ -70,7 +70,9 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Position Id</label>
-                        <input name="position_id" type="text" class="form-control">
+                        <select name="position_id" class="form-control">
+                            <option>Select</option>
+                        </select>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Photo</label>
@@ -97,6 +99,8 @@
             let currentPage = 1;
 
             loadMoreUsers();
+            loadPositions();
+
 
             $('#loadMoreUsersButton').on('click', loadMoreUsers);
 
@@ -104,13 +108,27 @@
                 let form = $('#createUserForm').serializeArray();
                 let data = [];
 
-                form.forEach(function (input){
+                form.forEach(function (input) {
 
                     data[input.name] = input.value
                 })
 
                 sendPostRequest(data);
             })
+
+            function loadPositions() {
+                $.ajax({
+                    url: '{{ route('api.get-positions') }}',
+                    method: 'GET',
+                    success: function (resp) {
+                        resp.positions.forEach(function (pos) {
+                            $('select[name="position_id"]').append(`<option value="${pos.id}">` +
+                                pos.name +
+                                '</option>')
+                        })
+                    }
+                })
+            }
 
             function loadMoreUsers() {
                 if (shouldNoMoreUsersRequest) {
