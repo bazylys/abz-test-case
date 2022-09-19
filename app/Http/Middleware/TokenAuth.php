@@ -25,8 +25,14 @@ class TokenAuth
      */
     public function handle(Request $request, Closure $next, )
     {
-        $this->tokenService->check($request->header('token'));
+        $token = $request->header('token');
 
-        return $next($request);
+        $this->tokenService->check($token);
+
+        $response =  $next($request);
+
+        $this->tokenService->revokeToken($token);
+
+        return $response;
     }
 }

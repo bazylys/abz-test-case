@@ -29,4 +29,9 @@ class AccessTokenService
 
         throw_if($tokenModel->expires_at < now(), new AccessTokenExpiredException());
     }
+
+    public function revokeToken($token)
+    {
+        return AccessToken::query()->where('token', $token)->delete();
+    }
 }
