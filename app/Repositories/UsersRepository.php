@@ -40,14 +40,16 @@ class UsersRepository implements UsersRepositoryInterface
         });
     }
 
-    public function create($data): bool
+    public function create($data): bool|int
     {
-        return User::query()->insertGetId([
+        $user =  User::query()->create([
             'name' => $data['name'],
             'email' => $data['email'],
             'phone' => $data['phone'],
             'position_id' => $data['position_id'],
             'photo' => $data['photo'],
         ]);
+
+        return $user->id;
     }
 }

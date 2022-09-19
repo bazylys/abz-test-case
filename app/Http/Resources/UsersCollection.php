@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
+use Illuminate\Support\Facades\Storage;
 
 class UsersCollection extends ResourceCollection
 {
@@ -16,7 +17,16 @@ class UsersCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-        return $this->collection->map(fn($user) => UsersResource::make($user));
+        return $this->collection->map(fn($user) => [
+            'id' => $user->id,
+            'name' => $user->name,
+            'email' => $user->email,
+            'phone' => $user->phone,
+            'position' => $user->position->name,
+            'position_id' => $user->position->id,
+            'registration_timestamp' => $user->created_at?->timestamp,
+            'photo' => Storage::disk('photos')->url($user->photo),
+        ]);
     }
 
     /**
